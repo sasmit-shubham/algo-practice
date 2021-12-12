@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int lengthLongestPath(string input) {
+        vector<int> rec;
+        int max_val = 0;
+        stringstream ss(input);
+        string cur;
+        while(getline(ss, cur, '\n')){
+            int i = 0;
+            while(cur[i] == '\t')++i;
+            if(i+1 > rec.size())
+                rec.push_back(0);
+            rec[i] = (i ? rec[i-1] : 0) + cur.size()-i+1;
+            if(cur.find('.') != string::npos)max_val = max(max_val, rec[i]-1);
+        }
+        return max_val;
+        
+    }
+};
