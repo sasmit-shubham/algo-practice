@@ -1,0 +1,47 @@
+class Solution {
+public:
+    
+    int countMatch(string w1, string w2){
+        int cnt =0;
+        for(int i=0; i<6; i++){
+            if(w1[i]==w2[i])
+                cnt++;
+        }
+        return cnt;
+    }
+    void findSecretWord(vector<string>& wordlist, Master& master) {
+
+        for(int i=0; i<10; i++){
+            unordered_map<string,int>count;
+            for(string word1: wordlist){
+                for(string word2: wordlist){
+                    if(countMatch(word1,word2)==0){
+                        count[word1]++;
+                    }
+
+                }
+
+                pair<string,int>minimax= {wordlist[0],INT_MAX};
+                for(string w: wordlist){
+                    if(count[w]<=minimax.second){
+                        minimax = {w,count[w]};
+                    }
+                }
+
+                int masterMatch = master.guess(minimax.first);
+                if(masterMatch==6)
+                    return;
+
+                vector<string>select;
+                for(string w: wordlist){
+                    if(countMatch(w,minimax.first)==masterMatch){
+                       select.push_back(w);
+                    }
+                }
+
+                wordlist = select;
+            }
+
+        }
+    }
+};
