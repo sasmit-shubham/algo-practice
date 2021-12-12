@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int n= nums.size();
+        if(n==1 or n==0){
+            return nums[0];
+        }
+        int a1=0, a2=0;                                    
+        int mx =0;                               
+        for(int i=0; i<n-1; i++){
+            if(i%2==0){
+                a1 = max(a1+nums[i],a2);
+            }
+            else{
+                a2 = max(a2+nums[i],a1);
+            }
+        }
+        
+         int a11=0;
+         int a22 =0;
+        
+        for(int i=n-1; i>0; i--){
+            if(i%2==0){
+                a11 = max(a11+nums[i],a22);
+            }else{
+                a22 = max(a22+nums[i],a11);
+            }
+        }
+        return max(max(a11,a22), max(a1,a2));
+        
+    }
+};
