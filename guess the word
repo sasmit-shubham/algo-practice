@@ -20,8 +20,9 @@ public:
                     }
 
                 }
-
-                pair<string,int>minimax= {wordlist[0],INT_MAX};
+            }
+            
+            pair<string,int>minimax= {wordlist[0],INT_MAX};
                 for(string w: wordlist){
                     if(count[w]<=minimax.second){
                         minimax = {w,count[w]};
@@ -40,7 +41,6 @@ public:
                 }
 
                 wordlist = select;
-            }
 
         }
     }
