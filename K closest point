@@ -1,0 +1,33 @@
+struct three{
+  int i,j,dist;  
+};
+struct cmp{
+    bool operator()(three i, three j){
+       return i.dist<j.dist;
+    }
+};
+
+class Solution {
+public:
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+        priority_queue<three,vector<three>,cmp>q;
+        q.push({points[0][0],points[0][1],points[0][0]*points[0][0]+points[0][1]*points[0][1]});
+        
+        for(int i=1; i<points.size(); i++){
+            int x = points[i][0]*points[i][0]+points[i][1]*points[i][1];
+            q.push({points[i][0],points[i][1],x});
+            if(int(q.size())>k){
+                q.pop();
+            }
+        }
+        
+        vector<vector<int>>ans;
+        int m = q.size();
+        while(!q.empty()){
+            three tp = q.top();
+            q.pop();
+            ans.push_back({tp.i,tp.j});
+        }
+        return ans;
+    }
+};
