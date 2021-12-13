@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int mctFromLeafValues(vector<int>& arr) {
+        int size = arr.size();
+
+        vector<vector<int>> dp(size,vector<int>(size,INT_MAX));
+        vector<vector<int>> mv(size,arr);
+        for (int i = 0; i < size; ++i) 
+            dp[i][i] = 0;
+  
+        for (int k = 1; k < size; ++k) {
+            for (int i = 0; i < size - k; ++i) {
+                mv[i][i+k] = max(mv[i][i], mv[i+1][i+k]);
+
+                int temp = INT_MAX;
+                for (int j = 0; j < k; ++j)
+                    temp = min(temp, dp[i][i+j]+dp[i+j+1][i+k]+mv[i][i+j]*mv[i+j+1][i+k]);
+    
+                dp[i][i+k] = temp;	
+            }
+        }
+
+        return dp[0][size-1];
+        
+        
+    }
+};
+
