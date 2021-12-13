@@ -1,0 +1,73 @@
+class Solution {
+public:
+    int dx[4] = {-1,1,0,0};
+    int dy[4] = {0,0,-1,1};
+    
+    bool ok(int i,int j, int n ,int m){
+        return i>=0 and j>=0 and i<n and j<m;
+    }
+    
+    int findMinDistance(vector<vector<int>>&grid,vector<vector<bool>>&vis,int i, int j, int dist,int n, int m){
+        // cout<<" shubham "<<endl;
+        queue<pair<int,pair<int,int>>>q;
+        q.push({0,{i,j}});
+        vis[i][j]=true;
+        while(!q.empty()){
+          pair<int,pair<int,int>> tp = q.front();
+          q.pop();
+          int level = tp.first;
+          int x = tp.second.first;
+          int y = tp.second.second;
+          for(int k=0; k<4; k++){
+              int xx = x+ dx[k];
+              int yy = y + dy[k];
+              if(ok(xx,yy,n,m) and vis[xx][yy]==false){
+                  
+                  // cout<<xx<<" "<<yy<<endl;
+                  vis[xx][yy]=true;
+                  if(grid[xx][yy]==2){
+                      return level+1;
+                  }else if(grid[xx][yy]==1){
+                      q.push({level+1,{xx,yy}});
+                  }
+              }
+          }
+        }
+        return INT_MAX;
+    }
+    int orangesRotting(vector<vector<int>>& grid) {
+        if(grid.empty()){
+            return -1;
+        }
+        
+        int n = grid.size();
+        int m = grid[0].size();
+        vector<vector<bool>>vis(n,vector<bool>(m,false));
+        bool isOrange = false;
+        int mx =0;
+        vector<int>ans;
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(grid[i][j]==1){
+                    
+                    for(int k=0; k<n; k++){
+                        for(int l=0; l<m; l++){
+                            vis[k][l] = false;
+                        }
+                    }
+                    mx = max(findMinDistance(grid,vis,i,j,0,n,m),mx);
+                    // ans.push_back(mx);
+                }
+            }
+            
+        }
+        
+        // for(int i=0; i<ans.size(); i++){
+        //     cout<<ans[i]<<" "<<endl;
+        // }
+        if(mx==INT_MAX)return -1;
+        
+        return mx;
+        
+    }
+};
