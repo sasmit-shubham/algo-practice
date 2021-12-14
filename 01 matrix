@@ -1,0 +1,58 @@
+class Solution {
+    int dx[4] = {-1,1,0,0};
+    int dy[4] = {0,0,-1,1};
+    int n;
+    int m;
+    bool ok(int i,int j){
+        return i>=0 and j>=0 and i<n and j<m;
+    }
+#define F first
+#define S second
+public:
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        n = mat.size();
+        m = mat[0].size();
+        queue<pair<int,int>>q;
+        vector<vector<bool>>vis(n,vector<bool>(m,false));
+        vector<vector<int>>ans(n,vector<int>(m,0));
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(mat[i][j]==1){
+                    bool flag = 0;
+                    for(int k=0; k<4; k++){
+                        if(ok(i+dx[k],j+dy[k])){
+                                if(mat[i+dx[k]][j+dy[k]]==0){
+                                    flag = 1;
+                                }
+                        }
+                    }
+                    if(flag){
+                        ans[i][j] = 1;
+                        vis[i][j] = true;
+                        q.push({i,j});
+                    }
+                }
+                
+            }
+        }
+        
+        while(!q.empty()){
+            pair<int,int> p =q.front();
+            q.pop();
+            
+            for(int i=0; i<4; i++){
+                if(ok(p.first+dx[i], p.second+dy[i])){
+                    if(vis[p.F+dx[i]][p.S+dy[i]] or mat[p.F+dx[i]][p.S+dy[i]]==0) continue;
+                    ans[p.first+dx[i]][p.second+dy[i]] = ans[p.first][p.second]+1;                               
+                    q.push({p.F+dx[i],p.S+dy[i]});
+                    vis[p.F+dx[i]][p.S+dy[i]] = true;
+                }
+            }
+        }
+        
+        return ans;
+        
+        
+        
+    }
+};
