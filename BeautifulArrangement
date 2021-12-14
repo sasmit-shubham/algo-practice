@@ -1,0 +1,30 @@
+class Solution {
+public:
+    
+    void calculateAns(vector<int> &v, int left, int right, int &ans){
+        if(left>right){
+            ans++;
+            return;
+        }
+        
+        for(int i=left; i<=right; i++){
+            if(((left+1)%v[i])==0 or (v[i]%(left+1)==0)){
+                swap(v[i],v[left]);
+                calculateAns(v,left+1,right,ans);
+                swap(v[i],v[left]);
+            }
+        }
+    }
+    int countArrangement(int n) {
+        
+        vector<int>v(n);
+        
+        for(int i=0; i<n; i++){
+            v[i]= i+1;
+        }
+        int ans =0;
+        calculateAns(v,0,n-1,ans);
+        return ans;
+        
+    }
+};
