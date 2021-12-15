@@ -1,0 +1,38 @@
+class Solution {
+public:
+    bool ispalin(string temp){
+        string t= temp;
+        reverse(t.begin(),t.end());
+        return t==temp;
+    }
+    string longestPalindrome(string s) {
+       int n= s.length();
+       int best=INT_MIN;
+       string ans;
+       for(int i=0; i<n; i++){
+           for(int x=0; i-x>=0 and x+i<n; ++x){
+               if(s[i-x]!=s[i+x]){
+                   break;
+               } 
+               int len= 2*x+1;
+               if(len>best){
+                   best=len;
+                  ans= s.substr(i-x,len); 
+               }
+           }
+           
+           for(int x=1; i-x+1>=0 and i+x<n; ++x){
+               if(s[i-x+1]!=s[i+x])
+                   break;
+               int len= 2*x;
+               if(len>best){
+                   best=len;
+                   ans=s.substr(i-x+1,len);
+               }
+           }
+       }
+        
+        
+        return ans;
+    }
+};
