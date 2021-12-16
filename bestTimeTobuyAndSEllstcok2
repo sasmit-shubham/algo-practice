@@ -1,0 +1,30 @@
+class Solution {
+public:
+    
+
+    int maxProfit(vector<int>& prices) {
+        // since relative ordering is important so we can't sort the array
+        // let dp[i] is the maximum profit upto ith element
+        // we can use gready approach here also
+        
+        
+        int ans =0;
+        int n = prices.size();
+        int i=0;
+        
+        while(i<n){
+            
+            int j=i+1;
+            while(j<n and prices[j]>=prices[j-1]){
+                j++;
+            }
+            j--;
+            ans+=prices[j]-prices[i];
+            // cout<<prices[i]<<" "<<prices[j]<<endl;
+            i = j+1;
+        }
+        
+        return ans;
+        
+    }
+};
