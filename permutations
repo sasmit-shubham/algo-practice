@@ -1,0 +1,24 @@
+vector<vector<int>>ans;
+class Solution {
+public:
+    void solve(vector<int>& nums, int left, int right){
+        if(left>=right){
+            ans.push_back(nums);
+            return;
+        }
+        
+        for(int i=left;i<=right; i++){
+            swap(nums[left],nums[i]);
+            solve(nums,left+1,right);
+            swap(nums[left],nums[i]);
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        ans.clear();
+        int n = nums.size();
+        int left =0;
+        solve(nums,left,n-1);
+        return ans;
+        
+    }
+};
