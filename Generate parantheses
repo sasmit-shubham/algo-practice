@@ -1,0 +1,25 @@
+class Solution {
+public:
+    void solve(int n, vector<string>&res, int open, int close, string s){
+        if(int(s.length())==2*n){
+            res.push_back(s);
+            return;
+        }
+        if(open>=close){
+            solve(n,res,open-1,close,s+'(');
+        }else{
+            if(open>0)
+            solve(n,res,open-1,close,s+'(');
+            if(close>0)
+            solve(n,res,open,close-1,s+')');
+        }
+        
+        
+        
+    }
+    vector<string> generateParenthesis(int n) {
+       vector<string>res;
+        solve(n,res,n,n,"");
+       return res;
+    }
+};
