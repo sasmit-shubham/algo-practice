@@ -1,0 +1,52 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+
+class Solution {
+public:
+    TreeNode* solve(vector<int>& inorder, vector<int>& postorder,int start, int last,vector<bool> &vis){
+        if(start>last) return NULL;
+        
+        int rootVal;
+        for(int i=last; i>=0; i--){
+            if(vis[i]==false){
+                rootVal = postorder[i];
+                vis[i] =true;
+                break;
+            }
+        }
+        
+        int idx = -1;
+        for(int i=start; i<=last; i++){
+            if(inorder[i]==rootVal){
+                idx=i;
+                break;
+            }
+        }
+        
+        if(idx==-1){
+            return NULL;
+        }
+        // cout<<idx+1<<" "<<last<<endl;
+        // cout<<start<<" "<<idx-1<<endl;
+        TreeNode* root = new TreeNode(rootVal);
+        root->right = solve(inorder,postorder,idx+1,last,vis);
+        root->left = solve(inorder,postorder,start,idx-1,vis);
+        
+        return root;
+    }
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        int n = postorder.size();
+        vector<bool>vis(n,false);
+        
+        return solve(inorder,postorder,0,n-1,vis);
+    }
+};
