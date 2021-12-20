@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int countSubstrings(string s) {
+        int cnt =0;
+        int n= s.size();
+        for(int i=0; i<n; i++){
+            
+            for(int x=0; (i-x)>=0 and (i+x)<n; x++){
+               if(s[i-x]==s[i+x]){
+                   cnt++;
+               }else{
+                   break;
+               }  
+            }
+            
+            for(int x=1; (i-x+1)>=0 and (i+x)<n; x++){
+                if(s[i-x+1]==s[i+x]){
+                    cnt++;
+                }else{
+                    break;
+                }
+            }
+        }
+        
+        return cnt;
+        
+    }
+};
