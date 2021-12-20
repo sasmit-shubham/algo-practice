@@ -1,0 +1,15 @@
+class Solution {
+public:
+    double angleClock(int hour, int minutes) {
+        // speedofhourhand is 12*60 minutes = 360 degree
+        // that is minutes* will be angle made from 12.
+            
+        double angleByHourHand = double((360*(hour*60+minutes)))/(12*60);
+        double minutesHand = double(360*minutes)/60;
+        
+        
+        return min(abs(angleByHourHand-minutesHand),360-abs(angleByHourHand-minutesHand));
+        
+            
+    }
+};
