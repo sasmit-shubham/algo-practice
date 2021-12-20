@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int maximumSwap(int num) {
+        string s;
+        while(num>0){
+            s.push_back('0'+num%10);
+            num/=10;
+        }
+        // for(int i=0; i<s.size(); i++){
+        //     cout<<s[i]<<endl;
+        // }
+        reverse(s.begin(),s.end());
+        for(int i=0; i<s.size(); i++){
+            char mx = '0'-1;  
+            int idx=0;
+            for(int j=i+1; j<s.size(); j++){
+               if(s[j]>=mx){
+                   idx=j;
+                   mx=s[j];
+               }    
+            }
+            
+            if(s[i]<mx){
+                swap(s[idx],s[i]);
+                break;
+            }
+        }
+        int ans=0;
+        for(int i=0; i<s.size(); i++){
+            int x = s[i]-'0';
+            for(int j=i+1; j<s.size(); j++){
+                x*=10;
+            }
+            ans+=x;
+        }
+        return ans;
+        
+    }
+};
