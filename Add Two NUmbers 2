@@ -1,0 +1,75 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* add(ListNode* head1, ListNode* head2){
+        if(head1==NULL) return head2;
+        if(head2==NULL) return head1;
+        int carry = 0;
+        ListNode* h= new ListNode(0);
+        ListNode* temp = h;
+        while(head1!=NULL and head2!=NULL){
+            int x = head1->val + head2->val+carry;
+            h->next = new ListNode((x%10));
+            carry = x/10;
+            h = h->next;
+            head1 = head1->next;
+            head2 = head2->next;
+        }
+        
+        while(head1){
+            int x = head1->val+carry;
+            h->next = new ListNode((x%10));
+            carry = x/10;
+            h= h->next;
+            head1 = head1->next;
+        }
+        
+        while(head2){
+            int x =  head2->val+carry;
+            h->next = new ListNode((x%10));
+            carry = x/10;
+            h= h->next;
+            head2 = head2->next;
+        }
+        
+        if(carry!=0){
+            
+            h->next = new ListNode(carry);
+        }
+        
+        return temp->next;
+    }
+    ListNode* reverseLinkedList(ListNode* head){
+        ListNode* temp = head;
+        ListNode* curr= head;
+        ListNode* prev = NULL;
+        ListNode* next;
+        while(curr){
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr=next;
+        }
+        return prev;
+    }
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* head1 = l1;
+        ListNode* head2 = l2;
+        head1 = reverseLinkedList(head1);
+        head2 = reverseLinkedList(head2);
+        
+        ListNode* sum =  add(head1, head2);
+        return reverseLinkedList(sum);
+        return sum;
+        
+    }
+};
