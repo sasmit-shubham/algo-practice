@@ -1,0 +1,45 @@
+class Solution {
+public:
+    int countDays(vector<int>&weights, int w){
+        int day =0;
+        int curr = w;
+        int n = weights.size();
+        for(int i=0; i<n; i++){
+            if(curr<weights[i]){
+                day+=ceil(double(weights[i])/w);
+                curr = w*ceil(double(weights[i])/w) - weights[i];
+            }else{
+                if(i==0){
+                    day++;
+                }
+                curr -= weights[i];
+            }
+        }
+        // cout<<w<<" "<<day<<endl;
+        return day;
+    }
+    int shipWithinDays(vector<int>& weights, int days) {
+        int lb= *max_element(weights.begin(),weights.end()); // lower_bound
+        int ub = INT_MAX; // upper_bound
+        int ans = INT_MAX;
+        int mid;
+        while(lb<ub){
+            mid = lb + (ub-lb)/2;
+            int result = countDays(weights,mid);
+            
+            if(result>days){
+                lb=mid+1;
+            }else if(result<days){ 
+                ub=mid;
+                
+                ans = min(mid,ans);
+                
+            }else{
+                ub=mid;
+                ans = min(mid,ans);
+
+            }
+        }
+        return lb;
+    }
+};
