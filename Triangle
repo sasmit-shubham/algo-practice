@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int  minimum(vector<vector<int>>& triangle,vector<vector<int>>& dp,int i,int j){
+        if(i>=(triangle.size())){
+            return 0;
+        }
+        if(dp[i][j]!= -1){
+            return dp[i][j];
+        }
+        return dp[i][j]=triangle[i][j]+
+            min(minimum(triangle,dp,i+1,j),minimum(triangle,dp,i+1,j+1));
+    }
+    int minimumTotal(vector<vector<int>>& triangle) {
+      vector<vector<int>>dp(201,vector<int>(201,-1));       
+      return minimum(triangle,dp,0,0);
+    }
+};
