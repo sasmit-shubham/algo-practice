@@ -1,0 +1,70 @@
+class Solution {
+public:
+    bool check(vector<int>&bloomDay, int mid,int tempM,int k){
+        int n= bloomDay.size();
+        int i=0;
+        while(i<=(n-k)){
+            
+            bool flag = false;
+            int j=i;
+            for(; j<i+k; j++){
+                if(bloomDay[j]>mid){
+                    // cout<<" condition violated "<<bloomDay[j]<<" "<<mid<<endl;
+                    flag=true;
+                    break;       
+                }
+            }
+            
+            if(flag==false){
+                tempM--;
+                i=j;
+                continue;
+            }
+            
+            if(tempM==0){
+                break;
+            }
+            
+            i=j+1;
+            
+        }
+        
+        if(tempM==0){
+            return true;
+        }
+        
+        return false;
+    }
+    int minDays(vector<int>& bloomDay, int m, int k) {
+        int  x = m*k;
+        if(x>(bloomDay.size())){
+            return -1;
+        }
+        int n = bloomDay.size();
+        int lb = *min_element(bloomDay.begin(),bloomDay.end());
+        int ub = *max_element(bloomDay.begin(),bloomDay.end())+1;
+        // int t=1;
+        while(lb<ub){
+            
+            int mid = (lb+ub)/2;
+            
+            int tempK = k;
+            
+            int ans = k;
+            int i=0;
+            
+            bool tempM = check(bloomDay,mid,m,k);
+                            
+            if(tempM){
+                ub=mid;
+                // cout<<" shubham "<<endl;
+            }else{
+                lb = mid+1;
+            }
+            
+            // cout<<mid<<" "<<tempM<<endl;
+        }
+        
+        return min(lb,*max_element(bloomDay.begin(),bloomDay.end()));
+    }
+};
