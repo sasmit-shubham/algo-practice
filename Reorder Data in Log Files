@@ -1,0 +1,67 @@
+struct cmp{
+    
+    public:
+    bool operator()(string s1, string s2){
+        string ide1="";
+        string ide2="";
+        int i=0;
+        while(i<s1.size() and s1[i]!=' '){
+            ide1+=s1[i];
+            i++;
+        }
+        
+        i++;
+        
+        string com1= s1.substr(i);
+        i=0;
+        
+        while(i<s2.size() and s2[i]!=' '){
+            ide2+=s2[i];
+            i++;
+        }
+        
+        i++;
+        
+        string com2= s2.substr(i);
+        
+        if(com1==com2){
+            // cout<<ide1<<" "<<ide2<<endl;
+            // cout<<com1<<" "<<com2<<endl;
+            return ide1<ide2;
+        }else{
+            return com1<com2;
+        }
+        
+    }
+};
+class Solution {
+public:
+    vector<string> reorderLogFiles(vector<string>& logs) {
+        // make two separate vectors for both sort after that
+        vector<string>letterLog;
+        vector<string>digitLog;
+        int n = logs.size();
+        for(int i=0; i<n; i++){
+            int m = logs[i].size();
+            int j=0;
+            while(j<m and logs[i][j]!=' '){
+                j++;
+            }
+            
+            j++;
+            if(logs[i][j]>='0' and logs[i][j]<='9'){
+                digitLog.push_back(logs[i]);
+            }else{
+                letterLog.push_back(logs[i]);
+            }
+        }
+        
+        sort(letterLog.begin(),letterLog.end(),cmp());
+        for(int i=0; i<digitLog.size(); i++){
+            letterLog.push_back(digitLog[i]);
+        }
+        
+        return letterLog;
+        
+    }
+};
