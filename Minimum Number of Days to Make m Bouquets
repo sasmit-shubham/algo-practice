@@ -3,8 +3,8 @@ public:
     bool check(vector<int>&bloomDay, int mid,int tempM,int k){
         int n= bloomDay.size();
         int i=0;
+        
         while(i<=(n-k)){
-            
             bool flag = false;
             int j=i;
             for(; j<i+k; j++){
@@ -14,18 +14,17 @@ public:
                     break;       
                 }
             }
-            
             if(flag==false){
                 tempM--;
-                i=j;
-                continue;
             }
-            
             if(tempM==0){
                 break;
             }
-            
-            i=j+1;
+            if(flag==false){
+                i=j;
+            }else{
+               i=j+1; 
+            }
             
         }
         
@@ -52,12 +51,11 @@ public:
             
             int ans = k;
             int i=0;
-            
+            // cout<<mid<<endl;
             bool tempM = check(bloomDay,mid,m,k);
                             
             if(tempM){
                 ub=mid;
-                // cout<<" shubham "<<endl;
             }else{
                 lb = mid+1;
             }
@@ -65,6 +63,6 @@ public:
             // cout<<mid<<" "<<tempM<<endl;
         }
         
-        return min(lb,*max_element(bloomDay.begin(),bloomDay.end()));
+        return lb;
     }
 };
