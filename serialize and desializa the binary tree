@@ -1,0 +1,83 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Codec {
+public:
+string serialize(TreeNode* root) {
+    
+    queue<TreeNode*> q;
+    stack<TreeNode*> st;
+    q.push(root);
+    string ans;
+    while(!q.empty())
+    {
+        auto tmp = q.front();
+        q.pop();
+        if(tmp)
+        {
+            ans += "V" + to_string(tmp->val) +"V";
+            q.push(tmp->left);
+            st.push(tmp);
+        }
+        else
+            ans += "N";
+        
+        if(q.empty() && !st.empty())
+            q.push(st.top()->right), st.pop();
+    }
+    
+    return ans;
+}
+
+// Decodes your encoded data to tree.
+TreeNode* deserialize(string data) {
+    
+    stack<TreeNode*> st;
+    TreeNode *root = NULL, *tmp = root;
+    int i = 0, n = data.size();
+    
+    while(i < n)
+    {
+        TreeNode *tmp2 = NULL;
+        if(data[i] == 'V')
+        {
+            i++;
+            int val = 0;
+            bool flag = false;
+            while(data[i] != 'V')
+            {
+                if(data[i] == '-')
+                {
+                    flag = true, i++;
+                    continue;
+                }
+                
+                val = val * 10 + (data[i++] - '0');
+            }
+            
+            tmp2 = new TreeNode(flag ? -val : val);
+        }
+        
+        if(tmp)
+            st.push(tmp), tmp->left = tmp2, tmp = tmp2;
+        else if(!st.empty())
+            st.top()->right = tmp2, st.pop(), tmp = tmp2;
+            
+        if(!root)
+            root = tmp = tmp2; 
+        i++;
+    }
+    
+    return root;        
+}
+};
+
+// Your Codec object will be instantiated and called as such:
+// Codec ser, deser;
+// TreeNode* ans = deser.deserialize(ser.serialize(root));
