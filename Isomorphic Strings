@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+        map<char,char>mp;
+        map<char,char>mpp;
+        int n = s.size();
+        for(int i=0; i<n; i++){
+            if(mp.count(s[i])){
+                if(mp[s[i]]!=t[i])
+                    return false;
+            }else{
+                mp[s[i]] = t[i];
+            }
+        }
+        
+        for(int i=0; i<n; i++){
+            if(mpp.count(t[i])){
+                if(mpp[t[i]]!=s[i])
+                    return false;
+            }else{
+                mpp[t[i]] = s[i];
+            }
+        }
+        
+        return true;
+    }
+};
