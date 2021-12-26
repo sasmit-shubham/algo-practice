@@ -1,36 +1,26 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
-
 class Solution {
 public:
-    int solve(TreeNode* root){
-        if(root==NULL) return 0;
+    void per(vector<int> nums, int left, int right, vector<vector<int>>&ans){
+        if(left>right){ // check once more
+            ans.push_back(nums);
+            return;
+        }
+        unordered_map<int,int>mp;
+        for(int i=left; i<=right; i++){
+            if(mp.count(nums[i])) continue;
+            mp[nums[i]]++;
+            swap(nums[i],nums[left]);
+            per(nums,left+1,right,ans);
+            swap(nums[i],nums[left]);
+        }
         
-        return 1+ max(solve(root->left),solve(root->right));
     }
-    
-    void inorder(TreeNode* root,int &mx){
-        if(root==NULL) return;
-       int left = solve(root->left);
-       int right = solve(root->right);
-       mx = max(left+right,mx); 
-        inorder(root->left,mx);
-        inorder(root->right,mx);
-       
-    }
-    int diameterOfBinaryTree(TreeNode* root) {
-        int mx= INT_MIN;
-       inorder(root,mx);
-        
-        return mx;
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        vector<vector<int>>ans;
+        int i=0;
+        int n= nums.size();
+        per(nums,i,n-1,ans);
+        return ans;
     }
 };
