@@ -1,0 +1,49 @@
+int dx[4] = {0,0,-1,1};
+int dy[4] = {1,-1,0,0};
+int n; 
+int m;
+class Solution {
+public:
+    bool ok(int i, int j){
+        return i>=0 and j>=0 and i<n and j<m;
+    }
+    int dfs(vector<vector<int>> &matrix, int i, int j, vector<vector<int>> &dp){
+        if(ok(i,j)==false){
+            return 0;
+        }
+        if(dp[i][j]!= -1){
+            return dp[i][j];
+        }
+        int mx = INT_MIN;
+        for(int k=0; k<4; k++){
+            int x = i + dx[k];
+            int y = j + dy[k];
+            int var=0;
+            if(ok(x,y) and matrix[x][y]>matrix[i][j]){
+                var = 1+dfs(matrix,x,y,dp);
+            }
+            mx = max(mx,var);
+        }
+        
+        return dp[i][j]=mx;
+    }
+    int longestIncreasingPath(vector<vector<int>>& matrix) {
+        n = matrix.size();
+        m = matrix[0].size();
+        vector<vector<int>>dp(n,vector<int>(m,-1));
+        int mx = INT_MIN;
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(dp[i][j]!= -1){
+                    mx = max(mx,dp[i][j]);
+                }else{
+                    int x = 1+dfs(matrix,i,j,dp);
+                    mx = max(x,mx);
+                }
+            }
+        }
+        
+        return mx;
+        
+    }
+};
