@@ -1,0 +1,34 @@
+class Solution {
+public:
+   void solve(string &digits, vector<string>&res,string nums[], int i, string s){
+        // what will be the base case for the problem
+        if(i== int(digits.size())){
+            res.push_back(s);
+            return ;
+        }
+        string val = nums[digits[i]- '0'];
+        
+        for(int j=0; j<int(val.size()); j++){
+            solve(digits,res,nums,i+1,s+val[j]);
+        }
+        
+        
+        return ;
+    }
+    
+    vector<string> letterCombinations(string digits) {
+        if(int(digits.size())==0){
+            return {};
+        }
+        string nums[10]={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        vector<string>res;
+         solve(digits,res,nums,0,"");
+        return res;
+    }
+    
+//     (i....i+3)
+//         (j....j+3)
+//            (k...k+3)
+//               (l...l+3)
+      
+};
