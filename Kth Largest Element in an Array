@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int partition(vector<int>&nums, int start, int end){
+        // picking a randon index
+        int rIndex = rand()%(end-start+1);
+        // swaping it with end so that standard quicksort partition 
+        // could be applied
+        swap(nums[start+rIndex], nums[end]);
+        // This section just make sures that pivot element is correctly placed
+        // with left side containing all element smaller than pivot and right
+        // side contain elements larger than pivot element 
+        int curr = start;
+        int pivot = nums[end];
+        for(int i = curr; i <= end-1; i++){
+            if(nums[i] <= pivot){
+                swap(nums[i], nums[curr]);
+                curr++;
+            }
+        }
+        swap(nums[curr], nums[end]);
+        return curr;
+    }
+    // Using quick select algorithm for randomly picking index and
+    // assigning its correct sorted position.
+    int quickselect(vector<int>& nums, int start, int end, int k){
+        // selecing a random index and finding its position using the partition algorithm
+        int pIndex = partition(nums, start, end); 
+        // if the randomly picked element is the kth largest
+        if(pIndex==nums.size()-k) return nums[pIndex];
+        // otherwise if it's less than kth largest query the right subarray
+        else if(pIndex < nums.size()-k) return quickselect(nums,pIndex+1, end, k); 
+        // otherwise if it's greater than kth largest, query the left subarray
+        else return quickselect(nums, start, pIndex-1, k);
+    }
+    int findKthLargest(vector<int>& nums, int k) {
+        return quickselect(nums, 0, nums.size()-1, k); 
+    }
+};
