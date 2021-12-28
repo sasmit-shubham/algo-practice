@@ -1,0 +1,113 @@
+
+class Solution {
+public:
+//     void traverseLeft(int left, int right,int down, int &element, vector<vector<int>>&v){
+//         while(left<right){
+//             v[down][left]=element;
+//             element++;
+//             left++;
+//         }
+        
+        
+//     }
+//     void traverseDown(int up,int down,int right,int &element, vector<vector<int>>&v){
+//         while(down<up){
+//             v[down][right]=element;
+//             element++;
+//             down++;
+//         }
+//     }
+    
+//     void traverseright(int right, int left, int up, int &element, vector<vector<int>>&v){
+//         while(right>left){
+//             v[up][right] = element;
+//             element++;
+//             right--;
+//         }
+//     }
+    
+//     void traverseUp(int up, int down, int left, int element, vector<vector<int>>&v){
+//         while(up>down){
+//             v[up][left] = element;
+//             element++;
+//             up--;
+//         }
+//     }
+    
+    
+    vector<vector<int>> generateMatrix(int n) {
+//        int left=0;
+//        int right=n-1;
+//        int up=n-1;
+//        int down=0;
+//        vector<vector<int>>ans(n,vector<int>(n));
+//        int element=1;
+        
+
+//         while(left<=right){
+//             traverseLeft(left,right,down,element,ans);
+//             if(element>(n*n))break;
+//             left++;
+//             traverseDown(up,down,right,element,ans);
+//             if(element>(n*n)) break;
+//             down++;
+//             traverseright(right,left,up,element,ans);
+//             if(element>(n*n))break;
+//             right--;
+//             traverseUp(up,down,left,element,ans);
+//             up--;
+//         }
+//         return ans;
+        
+
+   int t=0,b=n-1, r=n-1, l=0;
+   
+   
+   vector<vector<int>>v(n, vector<int>(n));
+   
+   int c=1;
+   int dir=0;
+   
+   while(l<=r and t<=b){
+      
+       if(dir==0){
+           for(int i=l; i<=r; i++){
+               v[t][i]= c;
+               c++;
+           }
+           t++;
+           dir++;
+       }
+       
+       if(dir == 1){
+           for(int i=t; i<=b; i++){
+               v[i][r]=c;
+               c++;
+           }
+           r--;
+           dir++;
+       }
+       
+       
+       if(dir==2){
+           for(int i=r; i>=l; i--){
+               v[b][i]= c;
+               c++;
+           }
+           
+           dir++;
+           b--;
+       }
+       
+       if(dir==3){
+           for(int i=b; i>=t; i--){
+               v[i][l]=c;
+               c++;
+           }
+           dir=0;
+           l++;
+       }
+   }
+   return v;
+    }
+};
