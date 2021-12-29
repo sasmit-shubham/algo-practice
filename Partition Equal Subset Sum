@@ -1,0 +1,39 @@
+vector<vector<int>>dp(201,vector<int>(20000+2,-1));
+class Solution {
+public:
+    bool solve(vector<int>&nums, int i, int target, int sum,vector<vector<int>>&dp,vector<int>&pre){
+        if(i>=nums.size()){
+            return false;
+        }
+        if(sum==target){
+             return dp[i][sum] = true;
+        }
+        if(sum>target){
+            return dp[i][sum] = false;
+        } 
+        
+        if(sum+pre[i]<target){
+            return dp[i][sum] = false;
+        }
+        if(dp[i][sum]!= -1){
+            return dp[i][sum];
+        }
+        return dp[i][sum] = solve(nums,i+1,target,sum,dp,pre)  or solve(nums,i+1,target,sum+nums[i],dp,pre);
+    }
+    bool canPartition(vector<int>& nums) {
+        vector<vector<int>>dp(201,vector<int>(20000+2,-1));
+        int sum =0;
+        int n = nums.size();
+        for(int i=0; i<n; i++){
+            sum+=nums[i];
+        }
+        vector<int>preSum(n);
+        preSum[n-1] = nums[n-1];
+        for(int i=n-2; i>=0; i--){
+            preSum[i]= preSum[i+1]+nums[i];
+        }
+       
+        if(sum&1) return false;
+        return solve(nums,0,sum/2,0,dp,preSum);
+    }
+};
