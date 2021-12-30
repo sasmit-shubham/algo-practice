@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        long long int C[n+m-1][min(m,n)];
+        int i, j;
+
+        // Calculate value of Binomial Coefficient
+        // in bottom up manner
+        for (i = 0; i <= (m+n-2); i++) {
+            for (j = 0; j <= min(i,(min(m-1,n-1))); j++) {
+                // Base Cases
+                if (j == 0 || j == i)
+                    C[i][j] = 1;
+
+                // Calculate value using
+                // previously stored values
+                else
+                    C[i][j] = C[i - 1][j - 1] + C[i - 1][j];
+            }
+        }
+        // cout<<m+n<<" "<<n;
+        return (int)C[m+n-2][min(m-1,n-1)];
+    }
+};
