@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        
+        // this is longest increasing subserquence code
+        
+        int n = nums.size();
+        vector<int>res;
+        res.push_back(nums[0]);
+        for(int i=1; i<nums.size(); i++){
+            if(res.back()<nums[i]){
+                res.push_back(nums[i]);
+            }else{
+                int lb = lower_bound(res.begin(),res.end(),nums[i])-res.begin();
+                res[lb] = nums[i];
+            }
+        }
+        
+        if(res.size()>=3) return true;
+        return false;
+    }
+};
+
+
+       
