@@ -1,0 +1,91 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+//         // watching porn is not a solution to the every fucking problem
+        
+//         int len=0;
+//         ListNode* temp= head;
+//         ListNode* t= head;
+//         ListNode* prev=NULL;
+//         if(head==NULL) return NULL;
+//         while(temp!=NULL){
+//             len++;
+//             temp=temp->next;
+//         }
+        
+//         n= len-n;
+//         if(n==0) return head->next;// bcoz we have to delete the head pointer
+        
+//         while(n>0 and t!=NULL){
+//             prev=t;
+//             t= t->next;
+//         }
+        
+//         prev->next= t->next;
+//         delete(t);
+//         return head;
+        
+//         // if it has only one element then what you will do we have to return NULL
+//         // if it has two element and you have to delete the first one then what you will do
+//         // we will assign head to head->next;
+//         // head->next
+        
+//         ListNode* temp= head;
+//         ListNode* t= head;
+//         ListNode* prev= NULL;
+//         if(head==NULL){
+//             return head;
+//         }
+//         int len=0;
+//         while(t!=NULL){
+//             len++;
+//             t= t->next;
+//         }
+         
+//         n= len-n;
+//         if(n==0) return head->next;
+//         while(n>0){
+//             prev=temp;
+//             temp= temp->next;
+//             // cout<<temp->val<<" ";
+//             n--;
+//         }
+//         prev->next=temp->next;
+//         delete(temp);
+//         return head;
+        
+        
+        
+        ListNode* temp = head;
+        ListNode* head2 = head;
+        ListNode* prev= NULL;
+        int cnt =0;
+        bool flag = false;
+        while(temp!=NULL){
+            cnt++;
+            if(cnt>n){
+                prev = head2;
+                head2 = head2->next;
+                flag= true;
+            }
+            temp= temp->next;
+        }
+        if(flag==false){
+            return head->next;
+        }
+        prev->next = head2->next;
+        delete(head2);
+        return head;
+        
+    }
+};
