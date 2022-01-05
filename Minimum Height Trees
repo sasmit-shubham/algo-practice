@@ -1,0 +1,46 @@
+class Solution {
+public:
+
+    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
+        if(n==1) return {0};
+        stack<int>st;
+        vector<bool>vis(n+1,false);
+        vector<vector<int>>adj(n);
+        vector<int>degree(n,0);
+        for(int i=0; i<edges.size(); i++){
+            int a = edges[i][0], b= edges[i][1];
+            adj[a].push_back(b);
+            adj[b].push_back(a);
+            degree[a]++;
+            degree[b]++;
+        }
+        
+        // push the all nodes which has degree one i.e leaf nodes
+        queue<int>degreeOne;
+        for(int i=0; i<n; i++){
+            if(degree[i]==1){
+                degreeOne.push(i);
+            }
+        }
+        
+        vector<int>ans;
+        while(!degreeOne.empty()){
+            int sz = degreeOne.size();
+            ans.clear();
+            // level order traversal
+            while(sz--){
+                int tp = degreeOne.front();
+                degreeOne.pop();
+                ans.push_back(tp);
+                for(int i=0; i<adj[tp].size(); i++){
+                    degree[adj[tp][i]]--;
+                    if(degree[adj[tp][i]]==1){
+                        degreeOne.push(adj[tp][i]);
+                    }
+                }
+            }
+        }
+        
+        return ans;  
+    }
+};
