@@ -1,0 +1,45 @@
+
+class Solution {
+public:
+    void solve(vector<int> &v, vector<int>tmp, int target, int sum, int idx,vector<vector<int>> & ans){
+        if(idx>v.size()){
+            if(sum==target){
+                ans.push_back(tmp);
+            }
+            return;
+        }
+        if(sum>target)
+            return;
+        for(int i=idx; i<v.size();i++){
+            vector<int>temp = tmp;
+            int sum1= sum;
+            if((sum+v[i])>target)continue;
+            while(sum<target){
+                
+                tmp.push_back(v[i]);
+                sum+=v[i];
+                if(sum==target){
+                    ans.push_back(tmp);
+                    tmp = temp;
+                    sum = sum1;
+                    break;
+                }
+                // cout<<sum<<" "<<idx+1<<endl;
+                solve(v,tmp,target,sum,i+1,ans);
+            }
+            
+            if(sum==target){
+               continue; 
+            }
+            
+                tmp = temp;
+                sum = sum1; 
+        }
+    }
+    vector<vector<int>> combinationSum(vector<int>& v, int target) {
+        vector<vector<int>>ans;
+        vector<int>tmp;
+        solve(v,tmp,target,0,0,ans);
+        return ans;
+    }
+};
