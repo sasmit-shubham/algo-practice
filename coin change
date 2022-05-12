@@ -1,0 +1,53 @@
+    typedef long long ll;
+    #define endl "\n"
+    #define pb push_back
+    #define rep(i, a, b) for (ll i = a; i < b; ++i)
+    #define repd(i, a, b) for (ll i = a; i >= b; --i)
+    #define mp make_pair
+    #define hell 1000000007
+    #define vvll vector<vector<ll>>
+    #define vll vector<ll>
+    #define mll map<ll, ll>
+    #define sz(x) (ll) x.size()
+    #define sll set<ll>
+    #define pll pair<ll, ll>
+    #define F first
+    #define S second
+    #define eb emplace_back
+    #define ppb pop_back
+    #define pf push_front
+    #define ppf pop_front
+    #define all(x) x.begin(), x.end()
+    #define clr(x) memset(x, 0, sizeof(x))
+    #define sortall(x) sort(all(x))
+    #define tr(it, a) for (auto it = a.begin(); it != a.end(); it++)
+    #define PI 3.1415926535897932384626
+    #define deb(x) cout << #x << "=" << x << endl
+    #define deb2(x, y) cout << #x << "=" << x << "," << #y << "=" << y << endl
+    #define precise(x) cout << fixed << setprecision(x)
+    const ll MAX = 2 * 1e5 + 1;
+    const ll INF = 1e18L + 5;
+    
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        vll dp(amount+1);
+        for(int i=1; i<=amount; i++){
+            dp[i] = INT_MAX;
+        }   
+        
+        for(int i=1; i<=amount; i++){
+            for(int j=0; j<coins.size(); j++){
+                if(i>=coins[j]){
+                    dp[i] = min(dp[i],dp[i-coins[j]]+1);
+                }  
+            }
+        }
+        
+        if(dp[amount]==INT_MAX){
+            return -1;
+        }else{
+            return dp[amount];
+        }
+    }
+};
