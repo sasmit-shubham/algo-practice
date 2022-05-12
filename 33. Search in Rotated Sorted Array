@@ -1,0 +1,58 @@
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int n= nums.size();
+        int low=0;
+        int high=n-1;
+        int ans=INT_MAX;
+        int pos= -1;
+        while(low<=high){
+            int mid= low+ (high-low)/2;
+            // cout<<mid<<endl;
+            if(mid==n-1){
+                // ans= min(ans,nums[mid]);
+                if(nums[mid]<ans){
+                    pos=mid;
+                    ans=nums[mid];
+                }
+            }
+            if(nums[mid]<nums[n-1]){
+                // ans=min(nums[mid],ans);
+                if(nums[mid]<ans){
+                    pos=mid;
+                    ans=nums[mid];
+                }
+                high=mid-1;
+            }else{
+                low=mid+1;
+            }
+        }
+        
+        int l1=0; int r1=pos-1;
+        
+        while(l1<=r1){
+            int mid=(l1+r1)>>1;
+            if(nums[mid]==target){
+                return mid;
+            }else if(nums[mid]<target){
+                l1=mid+1;
+            }else{
+                r1=mid-1;
+            }
+        }
+        
+        int l2=pos; int r2=n-1;
+        while(l2<=r2){
+            int mid=(l2+r2)>>1;
+            if(nums[mid]==target){
+                return mid;
+            }else if(nums[mid]<target){
+                l2=mid+1;
+            }else{
+                r2=mid-1;
+            }
+        }
+        
+        return -1;
+    }
+};
